@@ -6,11 +6,31 @@ export default function AddItems({
   onReset,
   onclick,
   onInitial,
-  handleCompleteAll,
-  handleInCompleteAll,
+  onCompleteAll,
+  onInCompleteAll,
 }) {
   const [input, setInput] = useState("");
   const inputRef = useRef();
+
+  const buttonsArray = [
+    {
+      name: "Mark all as complete",
+      onclick: onCompleteAll,
+    },
+    {
+      name: "Mark all as incomplete",
+      onclick: onInCompleteAll,
+    },
+    {
+      name: "Reset to initial",
+      onclick: onInitial,
+    },
+    {
+      name: "Remove all items",
+      onclick: onReset,
+    },
+  ];
+
   const addItems = (e) => {
     e.preventDefault();
 
@@ -52,18 +72,11 @@ export default function AddItems({
       </form>
 
       <div>
-        <Button onclick={handleCompleteAll} type="secondary">
-          Mark all as complete
-        </Button>
-        <Button onclick={handleInCompleteAll} type="secondary">
-          Mark all as incomplete
-        </Button>
-        <Button onclick={onInitial} type="secondary">
-          Reset to initial
-        </Button>
-        <Button onclick={onReset} type="secondary">
-          Remove all items
-        </Button>
+        {buttonsArray.map((btn) => (
+          <Button type="secondary" key={btn.name} onclick={btn.onclick}>
+            {btn.name}
+          </Button>
+        ))}
       </div>
     </div>
   );

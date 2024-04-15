@@ -59,12 +59,11 @@ function App() {
   };
 
   const packed = itemsList.filter((item) => item.packed === true);
-  console.log(packed.length);
   return (
     <div className="w-screen flex justify-start gap-5 flex-col items-center relative min-h-screen font-jakarta bg-orange-100">
       <BackgroundHeading />
 
-      <main className="shadow-xl z-[999] max-w-screen-lg w-full h-[50vw] bg-slate-50 rounded-2xl grid grid-cols-3 grid-rows-8 overflow-hidden">
+      <main className="shadow-xl z-[999] max-w-screen-lg w-full h-[35vw] bg-slate-50 rounded-2xl grid grid-cols-3 grid-rows-8 overflow-hidden">
         <Header itemsList={itemsList} number={packed.length} />
         <Sidebar>
           <ListFilter />
@@ -79,8 +78,8 @@ function App() {
           onAddItems={handleAddItems}
           onReset={handleReset}
           onInitial={handleInitial}
-          handleCompleteAll={handleCompleteAll}
-          handleInCompleteAll={handleInCompleteAll}
+          onCompleteAll={handleCompleteAll}
+          onInCompleteAll={handleInCompleteAll}
         />
       </main>
       <Footer />
