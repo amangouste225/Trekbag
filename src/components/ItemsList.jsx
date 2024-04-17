@@ -1,20 +1,15 @@
 import Items from "./Items";
 
-export default function ItemsList({
-  itemsList,
-  setItemsList,
-  handleCheck,
-  handleDelete,
-}) {
+export default function ItemsList({ items, onCheck, onDelete }) {
   return (
     <ul className="divide-y-2 my-5 flex flex-col">
-      {itemsList.map((item, i) => (
+      {items.map((item, i) => (
         <Items
-          handleCheck={handleCheck}
+          onCheck={onCheck}
           key={i}
           item={item}
           id={i}
-          handleDelete={handleDelete}
+          onDelete={onDelete}
         />
       ))}
     </ul>

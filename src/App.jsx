@@ -8,33 +8,33 @@ import Footer from "./Footer";
 import "./styles/global.css";
 import { initialValues } from "./lib/constants";
 import Sidebar from "./components/Sidebar";
+import EmptyBox from "./components/EmptyBox";
 
 function App() {
-  const [itemsList, setItemsList] = useState(initialValues);
+  const [items, setItems] = useState(initialValues);
 
   const handleAddItems = (newItem) => {
-    const newItems = [...itemsList, newItem];
-    setItemsList(newItems);
+    const newItems = [...items, newItem];
+    setItems(newItems);
   };
 
   const handleReset = () => {
-    setItemsList([]);
+    setItems([]);
   };
 
   const handleInitial = () => {
-    setItemsList(initialValues);
+    setItems(initialValues);
   };
 
   const handleCompleteAll = () => {
-    const newItems = itemsList.map((item) => {
+    const newItems = items.map((item) => {
       return { ...item, packed: true };
     });
-    setItemsList(newItems);
-    console.log(itemsList);
+    setItems(newItems);
   };
 
   const handleCheck = (id) => {
-    const newItems = itemsList.map((item) => {
+    const newItems = items.map((item) => {
       if (item.id === id) {
         return {
           ...item,
@@ -43,36 +43,41 @@ function App() {
       }
       return item;
     });
-    setItemsList(newItems);
+    setItems(newItems);
   };
 
   const handleDelete = (id) => {
-    setItemsList(itemsList.filter((item) => item.id !== id));
+    setItems(items.filter((item) => item.id !== id));
   };
 
   const handleInCompleteAll = () => {
-    setItemsList(
-      itemsList.map((item) => {
+    setItems(
+      items.map((item) => {
         return { ...item, packed: false };
       })
     );
   };
 
-  const packed = itemsList.filter((item) => item.packed === true);
+  const packed = items.filter((item) => item.packed === true);
   return (
     <div className="w-screen flex justify-start gap-5 flex-col items-center relative min-h-screen font-jakarta bg-orange-100">
       <BackgroundHeading />
 
       <main className="shadow-xl z-[999] max-w-screen-lg w-full h-[35vw] bg-slate-50 rounded-2xl grid grid-cols-3 grid-rows-8 overflow-hidden">
-        <Header itemsList={itemsList} number={packed.length} />
+        <Header numberOfItems={items.length} totalPackedItems={packed.length} />
         <Sidebar>
-          <ListFilter />
-          <ItemsList
-            handleCheck={handleCheck}
-            handleDelete={handleDelete}
-            itemsList={itemsList}
-            setItemsList={setItemsList}
-          />
+          {items.length ? (
+            <>
+              <ListFilter items={items} />
+              <ItemsList
+                onCheck={handleCheck}
+                onDelete={handleDelete}
+                items={items}
+              />
+            </>
+          ) : (
+            <EmptyBox />
+          )}
         </Sidebar>
         <AddItems
           onAddItems={handleAddItems}

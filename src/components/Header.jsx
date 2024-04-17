@@ -1,4 +1,4 @@
-export default function Header({ itemsList, number }) {
+export default function Header({ numberOfItems, totalPackedItems }) {
   return (
     <header className="header col-span-3 row-span-1  bg-gray-200 flex flex-row justify-between items-center px-5">
       <div className="flex items-center gap-1">
@@ -8,7 +8,7 @@ export default function Header({ itemsList, number }) {
       </div>
       <div>
         <p className="font-normal text-lg">
-          <strong>{number}</strong> /{itemsList.length} items packed
+          <strong>{totalPackedItems}</strong> /{numberOfItems} items packed
         </p>
       </div>
     </header>
