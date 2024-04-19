@@ -52,7 +52,7 @@ export default function AddItems({
   };
 
   return (
-    <div className="px-5 py-4 flex flex-col justify-between row-span-8 border">
+    <div className="px-5 py-4 flex flex-col justify-between row-span-9 border">
       <form className=" bg-gray-100 items-stretch" onSubmit={addItems}>
         <div>
           <label htmlFor="list" className="font-semibold block text-xl">

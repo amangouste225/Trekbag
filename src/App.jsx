@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import BackgroundHeading from "./BackgroundHeading";
 import AddItems from "./components/AddItems";
 import Header from "./components/Header";
@@ -11,7 +11,9 @@ import Sidebar from "./components/Sidebar";
 import EmptyBox from "./components/EmptyBox";
 
 function App() {
-  const [items, setItems] = useState(initialValues);
+  const [items, setItems] = useState(() => {
+    return JSON.parse(localStorage.getItem("items")) || initialValues;
+  });
 
   const handleAddItems = (newItem) => {
     const newItems = [...items, newItem];
@@ -59,20 +61,52 @@ function App() {
   };
 
   const packed = items.filter((item) => item.packed === true);
+
+  const options = [
+    { value: "default", label: "Sort by default" },
+    { value: "packed", label: "Packed" },
+    { value: "unpacked", label: "Unpacked" },
+  ];
+
+  const [sortBy, setSortBy] = useState("default");
+
+  const sortedItems = useMemo(
+    () =>
+      [...items].sort((a, b) => {
+        if (sortBy === "packed") {
+          return b.packed - a.packed;
+        }
+
+        if (sortBy === "unpacked") {
+          return a.packed - b.packed;
+        }
+
+        return;
+      }),
+    [sortBy, items]
+  );
+
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [items]);
   return (
     <div className="w-screen flex justify-start gap-5 flex-col items-center relative min-h-screen font-jakarta bg-orange-100">
       <BackgroundHeading />
 
-      <main className="shadow-xl z-[999] max-w-screen-lg w-full h-[35vw] bg-slate-50 rounded-2xl grid grid-cols-3 grid-rows-8 overflow-hidden">
+      <main className="shadow-xl z-[999] max-w-screen-lg w-full h-[65vh] bg-slate-50 rounded-2xl grid grid-cols-3 grid-rows-10 overflow-hidden">
         <Header numberOfItems={items.length} totalPackedItems={packed.length} />
         <Sidebar>
           {items.length ? (
             <>
-              <ListFilter items={items} />
+              <ListFilter
+                items={items}
+                options={options}
+                setSortBy={setSortBy}
+              />
               <ItemsList
+                sortedItems={sortedItems}
                 onCheck={handleCheck}
                 onDelete={handleDelete}
-                items={items}
               />
             </>
           ) : (
