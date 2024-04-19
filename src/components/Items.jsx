@@ -1,8 +1,13 @@
-export default function Items({ onCheck, item, onDelete, setItemsList }) {
+import { useContext } from "react";
+import { ItemsContext } from "../contexts/ContextProvider";
+
+export default function Items({ item }) {
+  const { handleCheck, handleDelete } = useContext(ItemsContext);
+
   return (
     <li className="font-bold flex items-center h-full py-2 gap-3 w-full relative">
       <input
-        onChange={() => onCheck(item.id)}
+        onChange={() => handleCheck(item.id)}
         checked={item.packed}
         type="checkbox"
         className="w-5 h-5"
@@ -12,7 +17,7 @@ export default function Items({ onCheck, item, onDelete, setItemsList }) {
       </label>
       <button
         className="font-bold absolute right-3"
-        onClick={() => onDelete(item.id)}
+        onClick={() => handleDelete(item.id)}
       >
         ❌
       </button>

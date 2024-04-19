@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  main {
+    @apply shadow-xl z-[999] max-w-screen-lg w-full h-[65vh] bg-slate-50 rounded-2xl grid grid-cols-3 grid-rows-10 overflow-hidden;
+  }
+
+  section {
+    @apply w-screen flex justify-start gap-5 flex-col items-center relative min-h-screen font-jakarta bg-orange-100;
+  }
+}

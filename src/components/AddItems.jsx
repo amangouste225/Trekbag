@@ -1,33 +1,34 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import Button from "./Button";
+import { ItemsContext } from "../contexts/ContextProvider";
 
-export default function AddItems({
-  onAddItems,
-  onReset,
-  onclick,
-  onInitial,
-  onCompleteAll,
-  onInCompleteAll,
-}) {
+export default function AddItems() {
   const [input, setInput] = useState("");
   const inputRef = useRef();
+  const {
+    handleInCompleteAll,
+    handleAddItems,
+    handleReset,
+    handleInitial,
+    handleCompleteAll,
+  } = useContext(ItemsContext);
 
   const buttonsArray = [
     {
       name: "Mark all as complete",
-      onclick: onCompleteAll,
+      onclick: handleCompleteAll,
     },
     {
       name: "Mark all as incomplete",
-      onclick: onInCompleteAll,
+      onclick: handleInCompleteAll,
     },
     {
       name: "Reset to initial",
-      onclick: onInitial,
+      onclick: handleInitial,
     },
     {
       name: "Remove all items",
-      onclick: onReset,
+      onclick: handleReset,
     },
   ];
 
@@ -47,7 +48,7 @@ export default function AddItems({
       packed: false,
     };
 
-    onAddItems(newItems);
+    handleAddItems(newItems);
     setInput("");
   };
 

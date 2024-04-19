@@ -1,10 +1,16 @@
 import Select from "react-select";
 
-export default function ListFilter({ items, options, setSortBy }) {
+export default function ListFilter({ sortBy, setSortBy }) {
+  const options = [
+    { value: "default", label: "Sort by default" },
+    { value: "packed", label: "Packed" },
+    { value: "unpacked", label: "Unpacked" },
+  ];
+
   return (
     <Select
       onChange={(option) => setSortBy(option.value)}
-      defaultValue={options[0]}
+      defaultValue={sortBy}
       options={options}
     />
   );

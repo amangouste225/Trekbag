@@ -1,16 +1,30 @@
+import { useContext, useMemo } from "react";
 import Items from "./Items";
+import { ItemsContext } from "../contexts/ContextProvider";
 
-export default function ItemsList({ onCheck, onDelete, sortedItems }) {
+export default function ItemsList({ sortBy }) {
+  const { items, handleCheck, handleDelete } = useContext(ItemsContext);
+
+  const sortedItems = useMemo(
+    () =>
+      [...items].sort((a, b) => {
+        if (sortBy === "packed") {
+          return b.packed - a.packed;
+        }
+
+        if (sortBy === "unpacked") {
+          return a.packed - b.packed;
+        }
+
+        return;
+      }),
+    [sortBy, items]
+  );
+
   return (
     <ul className="divide-y-2 my-5 flex flex-col">
       {sortedItems.map((item, i) => (
-        <Items
-          onCheck={onCheck}
-          key={i}
-          item={item}
-          id={i}
-          onDelete={onDelete}
-        />
+        <Items key={i} item={item} />
       ))}
     </ul>
   );
