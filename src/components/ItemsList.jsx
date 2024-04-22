@@ -1,9 +1,9 @@
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 import Items from "./Items";
-import { ItemsContext } from "../contexts/ContextProvider";
+import { useItemsStore } from "../stores/iTemsStore";
 
 export default function ItemsList({ sortBy }) {
-  const { items, handleCheck, handleDelete } = useContext(ItemsContext);
+  const items = useItemsStore((state) => state.items);
 
   const sortedItems = useMemo(
     () =>

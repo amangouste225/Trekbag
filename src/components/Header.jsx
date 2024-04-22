@@ -1,10 +1,8 @@
-import { useContext } from "react";
-import { ItemsContext } from "../contexts/ContextProvider";
+import { useItemsStore } from "../stores/iTemsStore";
 
 export default function Header() {
-  const { items } = useContext(ItemsContext);
+  const items = useItemsStore((state) => state.items);
   const numberOfItems = items.filter((item) => item.packed === true);
-
   return (
     <header className="header col-span-3 row-span-1  bg-gray-200 flex flex-row justify-between items-center px-5">
       <div className="flex items-center gap-1">

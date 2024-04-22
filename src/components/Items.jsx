@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import { ItemsContext } from "../contexts/ContextProvider";
+import { useItemsStore } from "../stores/iTemsStore";
 
 export default function Items({ item }) {
-  const { handleCheck, handleDelete } = useContext(ItemsContext);
+  const handleDelete = useItemsStore((state) => state.handleDelete);
+  const handleCheck = useItemsStore((state) => state.handleCheck);
 
   return (
     <li className="font-bold flex items-center h-full py-2 gap-3 w-full relative">

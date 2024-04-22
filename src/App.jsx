@@ -5,18 +5,15 @@ import Header from "./components/Header";
 import Footer from "./Footer";
 import "./styles/global.css";
 import Sidebar from "./components/Sidebar";
-import ContextProvider from "./contexts/ContextProvider";
 
 function App() {
   return (
     <section>
       <BackgroundHeading />
       <main>
-        <ContextProvider>
-          <Header />
-          <Sidebar />
-          <AddItems />
-        </ContextProvider>
+        <Header />
+        <Sidebar />
+        <AddItems />
       </main>
       <Footer />
     </section>

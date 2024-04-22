@@ -1,34 +1,34 @@
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Button from "./Button";
-import { ItemsContext } from "../contexts/ContextProvider";
+import { useItemsStore } from "../stores/iTemsStore";
 
 export default function AddItems() {
   const [input, setInput] = useState("");
   const inputRef = useRef();
-  const {
-    handleInCompleteAll,
-    handleAddItems,
-    handleReset,
-    handleInitial,
-    handleCompleteAll,
-  } = useContext(ItemsContext);
+  const removeAll = useItemsStore((state) => state.removeAll);
+  const markAsCompleteAll = useItemsStore((state) => state.markAsCompleteAll);
+  const resetToInitial = useItemsStore((state) => state.resetToInitial);
+  const addItem = useItemsStore((state) => state.addItem);
+  const markAsInCompleteAll = useItemsStore(
+    (state) => state.markAsInCompleteAll
+  );
 
   const buttonsArray = [
     {
       name: "Mark all as complete",
-      onclick: handleCompleteAll,
+      onclick: markAsCompleteAll,
     },
     {
       name: "Mark all as incomplete",
-      onclick: handleInCompleteAll,
+      onclick: markAsInCompleteAll,
     },
     {
       name: "Reset to initial",
-      onclick: handleInitial,
+      onclick: resetToInitial,
     },
     {
       name: "Remove all items",
-      onclick: handleReset,
+      onclick: removeAll,
     },
   ];
 
@@ -42,13 +42,7 @@ export default function AddItems() {
       return;
     }
 
-    const newItems = {
-      name: input,
-      id: Date.now(),
-      packed: false,
-    };
-
-    handleAddItems(newItems);
+    addItem(input);
     setInput("");
   };
 
